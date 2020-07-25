@@ -8,21 +8,19 @@ namespace WordCount.Library.Services
     {
         public int CalculateFrequencyForWord(string text, string word)
         {             
-            var textArray = ParagraphTextAsArray(text);
+            var wordList = ParagraphWordList(text);
 
             //Query to return the count of a specified word in the text
-            return textArray
-                .Where(x => x.ToLowerInvariant() == word.ToLowerInvariant())
+            return wordList
+                .Where(w => w.ToLowerInvariant() == word.ToLowerInvariant())
                 .Count();
         }
 
         public int CalculateHighestFrequency(string text)
         {
-            var dictionairy = WordFrequencyDictioniary(text);
+            var wordFrequency = WordFrequencyDictioniary(text);
             
-            var wordFrequency = dictionairy.ToList();
-
-            return wordFrequency[0].Value;
+            return wordFrequency.FirstOrDefault().Value;
         }
 
         public IList<IWordFrequency> CalculateMostFrequentNWords(string text, int n)
@@ -48,11 +46,11 @@ namespace WordCount.Library.Services
         }
 
         /// <summary>
-        /// Convert the string into an array of words 
+        /// Convert the string/paragraph/sentence into an array of words
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private string[] ParagraphTextAsArray(string text) 
+        private string[] ParagraphWordList(string text) 
         {
             return text.Split(
                 new char[]
@@ -69,19 +67,19 @@ namespace WordCount.Library.Services
 
         /// <summary>
         /// Query to get frequency of all words in the paragraph as dictionary
-        ///Order in descending will put highest frrequency into position 0 in list
+        /// Order in descending will put highest frequency into position 0 in list
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
         private IOrderedEnumerable<KeyValuePair<string,int>> WordFrequencyDictioniary(string text) 
         {
-            var textArray = ParagraphTextAsArray(text);
+            var wordList = ParagraphWordList(text);
 
-            return textArray
-               .Where(x => x.ToLowerInvariant() != string.Empty)
-               .GroupBy(x => x.ToLowerInvariant())
-               .ToDictionary(x => x.Key.ToLowerInvariant(), y => y.Count())
-               .OrderByDescending(x => x.Value);
+            return wordList
+               .Where(word => word.ToLowerInvariant() != string.Empty)
+               .GroupBy(word => word.ToLowerInvariant())
+               .ToDictionary(word => word.Key.ToLowerInvariant(), frequency => frequency.Count())
+               .OrderByDescending(frequency => frequency.Value);
         }
     }
 }
