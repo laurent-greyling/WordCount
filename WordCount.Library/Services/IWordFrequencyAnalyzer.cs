@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WordCount.Services
+namespace WordCount.Library.Services
 {
     public interface IWordFrequencyAnalyzer
     {

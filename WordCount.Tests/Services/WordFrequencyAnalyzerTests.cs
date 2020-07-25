@@ -1,22 +1,22 @@
-﻿using WordCount.Services;
+﻿using WordCount.Library.Services;
 using Xunit;
 
 namespace WordCount.Tests.Services
 {
-    public class WordFrequencyAnalyzerTest
+    public class WordFrequencyAnalyzerTests
     {
         private readonly string _phrase = "The sun shines over the lake";
         private readonly string _word = "ThE";
         private readonly int _nthValue = 3;
         private readonly WordFrequencyAnalyzer Result;
 
-        public WordFrequencyAnalyzerTest()
+        public WordFrequencyAnalyzerTests()
         {
             Result = new WordFrequencyAnalyzer();
         }
 
         [Fact]
-        public void Frequency_Of_Word_Return_Occurence_Of_Specified_Word() 
+        public void Frequency_Of_Word_Return_Occurence_Of_Specified_Word()
         {
             var wordFrequency = Result.CalculateFrequencyForWord(_phrase, _word);
 

@@ -1,4 +1,4 @@
-﻿namespace WordCount.Services
+﻿namespace WordCount.Library.Services
 {
     public class WordFrequency: IWordFrequency
     {
