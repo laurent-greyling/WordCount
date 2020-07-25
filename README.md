@@ -41,13 +41,13 @@ Running the app can happen in two ways:
    - Press F5
 
 2. When running from a `command line prompt`
-   - Navigate to where `WordCount.exe` lives
+   - Navigate to where `WordCount.exe` lives (after release build)
    - Run
    ```
    WordCount.exe -w <word to evaluate> -t <text to evaluate> -n <n> -p <path to text file>
    ```
 
-__Note_ in this project a large txt file is included named `IpsumLargeString.txt`.
+__Note__ in this project a large txt file is included named `IpsumLargeString.txt`.
 
 The output should look something like this:
 
