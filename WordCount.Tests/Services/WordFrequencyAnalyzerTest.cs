@@ -5,10 +5,10 @@ namespace WordCount.Tests.Services
 {
     public class WordFrequencyAnalyzerTest
     {
-        private string _phrase = "The sun shines over the lake";
-        private string _word = "ThE";
-        private int _nthValue = 3;
-        private WordFrequencyAnalyzer Result;
+        private readonly string _phrase = "The sun shines over the lake";
+        private readonly string _word = "ThE";
+        private readonly int _nthValue = 3;
+        private readonly WordFrequencyAnalyzer Result;
 
         public WordFrequencyAnalyzerTest()
         {
