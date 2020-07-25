@@ -1,4 +1,5 @@
-﻿using WordCount.Library.Services;
+﻿using System;
+using WordCount.Library.Services;
 using Xunit;
 
 namespace WordCount.Tests.Services
@@ -13,6 +14,54 @@ namespace WordCount.Tests.Services
         public WordFrequencyAnalyzerTests()
         {
             Result = new WordFrequencyAnalyzer();
+        }
+
+        [Fact]
+        public void CalculateFrequencyForWord_Text_Null_Throws_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Result.CalculateFrequencyForWord(null, _word));
+        }
+
+        [Fact]
+        public void CalculateFrequencyForWord_Text_Empty_Throws_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => Result.CalculateFrequencyForWord("", _word));
+        }
+
+        [Fact]
+        public void CalculateFrequencyForWord_Word_Null_Throws_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Result.CalculateFrequencyForWord(_phrase, null));
+        }
+
+        [Fact]
+        public void CalculateFrequencyForWord_Word_Empty_Throws_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => Result.CalculateFrequencyForWord(_phrase, ""));
+        }
+
+        [Fact]
+        public void CalculateHighestFrequency_Text_Null_Throws_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Result.CalculateHighestFrequency(null));
+        }
+
+        [Fact]
+        public void CalculateHighestFrequency_Text_Empty_Throws_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => Result.CalculateHighestFrequency(""));
+        }
+
+        [Fact]
+        public void CalculateMostFrequentNWords_Text_Null_Throws_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Result.CalculateMostFrequentNWords(null, _nthValue));
+        }
+
+        [Fact]
+        public void CalculateMostFrequentNWords_Text_Empty_Throws_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => Result.CalculateMostFrequentNWords("", _nthValue));
         }
 
         [Fact]

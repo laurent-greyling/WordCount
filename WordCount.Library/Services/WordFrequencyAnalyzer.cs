@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WordCount.Library.Utilities;
 
 namespace WordCount.Library.Services
 {
     public class WordFrequencyAnalyzer : IWordFrequencyAnalyzer
     {
         public int CalculateFrequencyForWord(string text, string word)
-        {             
+        {
+            Ensure.ArgumentNotNullOrEmptyString(text, nameof(text));
+            Ensure.ArgumentNotNullOrEmptyString(word, nameof(word));
+
             var wordList = ParagraphWordList(text);
 
             //Query to return the count of a specified word in the text
@@ -18,6 +22,8 @@ namespace WordCount.Library.Services
 
         public int CalculateHighestFrequency(string text)
         {
+            Ensure.ArgumentNotNullOrEmptyString(text, nameof(text));
+
             var wordFrequency = WordFrequencyDictioniary(text);
             
             return wordFrequency.FirstOrDefault().Value;
@@ -25,6 +31,8 @@ namespace WordCount.Library.Services
 
         public IList<IWordFrequency> CalculateMostFrequentNWords(string text, int n)
         {
+            Ensure.ArgumentNotNullOrEmptyString(text, nameof(text));
+
             var wordFrequencies = new List<IWordFrequency>();
 
             var dictionairy = WordFrequencyDictioniary(text);
