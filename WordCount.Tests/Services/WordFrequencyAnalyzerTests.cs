@@ -7,6 +7,9 @@ namespace WordCount.Tests.Services
     public class WordFrequencyAnalyzerTests
     {
         private readonly string _phrase = "The sun shines over the lake";
+        private readonly string _numericPhrase = "The sun shines over the lake 7, 7, 777, 777, 777777777, 777777777";
+        private readonly string _guidPhrase = "The sun shines over the lake 64b0e55b-9cf0-41a0-ad7c-c37d2a48d5fb 64b0e55b-9cf0-41a0-ad7c-c37d2a48d5fb";
+        private readonly string _charnumberPhrase = "The sun shines over the lake thr33 tim3s thr33";
         private readonly string _word = "ThE";
         private readonly int _nthValue = 3;
         private readonly WordFrequencyAnalyzer Result;
@@ -84,6 +87,45 @@ namespace WordCount.Tests.Services
         public void Most_Frequent_N_Returns_List_Of_N_Words_With_Frequency()
         {
             var wordFrequency = Result.CalculateMostFrequentNWords(_phrase, _nthValue);
+
+            Assert.Equal("the", wordFrequency[0].Word);
+            Assert.Equal(2, wordFrequency[0].Frequency);
+            Assert.Equal("lake", wordFrequency[1].Word);
+            Assert.Equal(1, wordFrequency[1].Frequency);
+            Assert.Equal("over", wordFrequency[2].Word);
+            Assert.Equal(1, wordFrequency[2].Frequency);
+        }
+
+        [Fact]
+        public void Most_Frequent_N_Returns_List_Of_N_Words_Numeric_Values_Excluded()
+        {
+            var wordFrequency = Result.CalculateMostFrequentNWords(_numericPhrase, _nthValue);
+
+            Assert.Equal("the", wordFrequency[0].Word);
+            Assert.Equal(2, wordFrequency[0].Frequency);
+            Assert.Equal("lake", wordFrequency[1].Word);
+            Assert.Equal(1, wordFrequency[1].Frequency);
+            Assert.Equal("over", wordFrequency[2].Word);
+            Assert.Equal(1, wordFrequency[2].Frequency);
+        }
+
+        [Fact]
+        public void Most_Frequent_N_Returns_List_Of_N_Words_Guid_Values_Excluded()
+        {
+            var wordFrequency = Result.CalculateMostFrequentNWords(_guidPhrase, _nthValue);
+
+            Assert.Equal("the", wordFrequency[0].Word);
+            Assert.Equal(2, wordFrequency[0].Frequency);
+            Assert.Equal("lake", wordFrequency[1].Word);
+            Assert.Equal(1, wordFrequency[1].Frequency);
+            Assert.Equal("over", wordFrequency[2].Word);
+            Assert.Equal(1, wordFrequency[2].Frequency);
+        }
+
+        [Fact]
+        public void Most_Frequent_N_Returns_List_Of_N_Words_NumerWords_Values_Excluded()
+        {
+            var wordFrequency = Result.CalculateMostFrequentNWords(_charnumberPhrase, _nthValue);
 
             Assert.Equal("the", wordFrequency[0].Word);
             Assert.Equal(2, wordFrequency[0].Frequency);

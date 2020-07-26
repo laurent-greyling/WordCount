@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WordCount.Library.Utilities;
 
 namespace WordCount.Library.Services
@@ -84,7 +85,9 @@ namespace WordCount.Library.Services
             var wordList = ParagraphWordList(text);
 
             return wordList
-               .Where(word => word.ToLowerInvariant() != string.Empty)
+               .Where(word => word.ToLowerInvariant() != string.Empty 
+               //Exclude numeric and guid values and words containing numbers e,g h3ll0
+               && !Regex.IsMatch(word, @"([0-9])|((?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$)"))
                .GroupBy(word => word.ToLowerInvariant())
                .ToDictionary(word => word.Key.ToLowerInvariant(), frequency => frequency.Count())
                .OrderByDescending(frequency => frequency.Value);

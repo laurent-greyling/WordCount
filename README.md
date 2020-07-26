@@ -77,6 +77,9 @@ It tests the following:
 - CalculateFrequencyForWord_Word_Null_Throws_ArgumentNullException
 - CalculateFrequencyForWord_Text_Empty_Throws_ArgumentException
 - CalculateFrequencyForWord_Text_Null_Throws_ArgumentNullException
+- Most_Frequent_N_Returns_List_Of_N_Words_Numeric_Values_Excluded
+- Most_Frequent_N_Returns_List_Of_N_Words_Guid_Values_Excluded
+- Most_Frequent_N_Returns_List_Of_N_Words_NumerWords_Values_Excluded
 
 ## 3rd Party Libraries used in this project
 - `XUnit` => Unit testing framework
