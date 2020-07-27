@@ -89,5 +89,6 @@ It tests the following:
 - Frequency_Of_Word_Word_Has_Leading_Trailing_Whitespace_Return_Occurence_Of_Specified_Word
 
 ## 3rd Party Libraries used in this project
-- `XUnit` => Unit testing framework
-- `CommandLineParser` => to pass command line options easily
+- `XUnit` v2.4.1 => Unit testing framework
+- `xunit.runner.visualstudio` v2.4.2 => To run and discover unit tests
+- `CommandLineParser` v2.8.0 => to pass command line options easily
