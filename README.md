@@ -21,9 +21,9 @@ The console app uses the `WordCount.Library` to evaluate the above mentioned fre
 To run the console app you need to provide it the following arguments:
 
 - `-t` or `--text` | _string_: The text that need to be analysed for word frequency. This is meant for a small evaluation set
-- `w` or `--word` | _string_: The specified word the frequency should be calculated for
-- `n` or `--nth` | _int_: The most frequent 'n' words in the text
-- `p` or `--path` | _string_: Path to file with text to be analysed. For large body of text
+- `-w` or `--word` | _string_: The specified word the frequency should be calculated for
+- `-n` or `--nth` | _int_: The most frequent 'n' words in the text
+- `-p` or `--path` | _string_: Path to file with text to be analysed. For large body of text
 
 __Note__ if you provide both `t` and `p`, the application will concat them and evaluate it in it's entirety.
 
