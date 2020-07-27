@@ -46,6 +46,11 @@ Running the app can happen in two ways:
    ```
    WordCount.exe -w <word to evaluate> -t <text to evaluate> -n <n> -p <path to text file>
    ```
+3. If no `commandline arguments` are given, the app will default back to basic readline commands for manual input, with instructions for optimal running. In this mode the following will display:
+   - `Please provide the text you want analysed:` => provide your text you want analysed
+   - `Please enter the word you want the frequency of:` => enter what word you want the frequency for
+   - `Please enter the 'n' number:` => enter an `int` value for `n`. if you provide anything else, it will first try to parse the value and if fail default to zero. Nothing will then be displayed.
+   - `Please enter path to text file (if any exist):` => if you have a large text file, enter the path of file e.g. `C:\FileName.txt`
 
 __Note__ in this project a large txt file is included named `IpsumLargeString.txt`.
 
