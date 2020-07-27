@@ -17,7 +17,7 @@ namespace WordCount.Library.Services
 
             //Query to return the count of a specified word in the text
             return wordList
-                .Where(w => w.ToLowerInvariant() == word.ToLowerInvariant())
+                .Where(w => w.ToLowerInvariant() == word.ToLowerInvariant().Trim())
                 .Count();
         }
 

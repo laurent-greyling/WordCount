@@ -109,7 +109,7 @@ namespace WordCount.Library.Utilities
         /// <returns></returns>
         public static bool IsNotValidWord(string word)
         {
-            return Regex.IsMatch(word, @"([0-9])|((?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$)|([`~!@#$%^&*()_\-+={}[\]])");
+            return Regex.IsMatch(word, @"([0-9])|((?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$)|([`~!@#$%^&*()_\-+={}[\]])|([\s])");
         }
     }
 }

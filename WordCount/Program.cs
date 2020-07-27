@@ -46,16 +46,17 @@ namespace WordCount
 
                         if (!string.IsNullOrWhiteSpace(textToEvaluate) && !string.IsNullOrWhiteSpace(options.WordToUse))
                         {
-                            if (Ensure.IsNotValidWord(options.WordToUse))
+                            var wordToUse = options.WordToUse.Trim();
+                            if (Ensure.IsNotValidWord(wordToUse))
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine($"The requested word '{options.WordToUse}' is invalid, a word should be between A-Z or a-z");
+                                Console.WriteLine($"The requested word '{wordToUse}' is invalid, a word should be between A-Z or a-z");
                                 Console.ForegroundColor = ConsoleColor.White;
                             }
                             else 
                             {
-                                var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, options.WordToUse);
-                                Console.WriteLine($"The word '{options.WordToUse}' occurred '{wordFrequency}' times");
+                                var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, wordToUse);
+                                Console.WriteLine($"The word '{wordToUse}' occurred '{wordFrequency}' times");
                             }                            
                         }
 

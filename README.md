@@ -81,6 +81,7 @@ It tests the following:
 - Most_Frequent_N_Returns_List_Of_N_Words_Guid_Values_Excluded
 - Most_Frequent_N_Returns_List_Of_N_Words_NumerWords_Values_Excluded
 - Most_Frequent_N_Returns_List_Of_N_Words_SpecialChar_Values_Excluded
+- Frequency_Of_Word_Word_Has_Leading_Trailing_Whitespace_Return_Occurence_Of_Specified_Word
 
 ## 3rd Party Libraries used in this project
 - `XUnit` => Unit testing framework

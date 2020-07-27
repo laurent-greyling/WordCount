@@ -12,6 +12,7 @@ namespace WordCount.Tests.Services
         private readonly string _charnumberPhrase = "The sun shines over the lake thr33 tim3s thr33";
         private readonly string _specialCharPhrase = "The sun shines over the lake - + = ) ( * & ^ % $ # @ ! ~ ` - + = ) ( * & ^ % $ # @ ! ~ `";
         private readonly string _word = "ThE";
+        private readonly string _whitespaceWord = " ThE ";
         private readonly int _nthValue = 3;
         private readonly WordFrequencyAnalyzer Result;
 
@@ -72,6 +73,14 @@ namespace WordCount.Tests.Services
         public void Frequency_Of_Word_Return_Occurence_Of_Specified_Word()
         {
             var wordFrequency = Result.CalculateFrequencyForWord(_phrase, _word);
+
+            Assert.Equal(2, wordFrequency);
+        }
+
+        [Fact]
+        public void Frequency_Of_Word_Word_Has_Leading_Trailing_Whitespace_Return_Occurence_Of_Specified_Word()
+        {
+            var wordFrequency = Result.CalculateFrequencyForWord(_phrase, _whitespaceWord);
 
             Assert.Equal(2, wordFrequency);
         }
