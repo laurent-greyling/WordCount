@@ -13,7 +13,7 @@ namespace WordCount
         [Option('w', "word", Required = false, HelpText = "The specified word the frequency should be calculated for")]
         public string WordToUse { get; set; }
 
-        [Option('n', "nth", Required = false, Default = 0, HelpText = "The most frequent 'n' words in the text")]
+        [Option('n', "nth", Required = false, HelpText = "The most frequent 'n' words in the text")]
         public int WordOnAverageCount { get; set; }
 
         [Option('p', "path", Required = false, HelpText = "Path to file with text to be analysed")]

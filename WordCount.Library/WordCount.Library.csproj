@@ -49,6 +49,7 @@
     <Compile Include="Services\WordFrequency.cs" />
     <Compile Include="Services\WordFrequencyAnalyzer.cs" />
     <Compile Include="Utilities\Ensure.cs" />
+    <Compile Include="Utilities\TextBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

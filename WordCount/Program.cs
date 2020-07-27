@@ -1,28 +1,39 @@
 ﻿using CommandLine;
 using System;
-using System.IO;
-using System.Text;
 using WordCount.Factories;
+using WordCount.Library.Utilities;
 
 namespace WordCount
 {
     class Program
     {
+        /// <summary>
+        /// To run optimally:
+        /// To Debug
+        /// Right click on the project WordCount
+        /// Make it the startup project
+        /// Go to properties > debug
+        /// In the Command Line Arguments set the following
+        /// -w 'word to evaluate' -t 'text to evaluate' -n 'n' -p 'path to text file'
+        /// Press F5
+        /// 
+        /// To Run Release
+        /// Navigate to where `WordCount.exe` lives (after release build)
+        /// Run - WordCount.exe -w 'word to evaluate' -t 'text to evaluate' -n 'n' -p 'path to text file'
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             var wordFrequencyAnalyzer = WordFrequencyAnalyzerFactory.WordFrequencyAnalyzer();
 
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(o =>
+                .WithParsed(options =>
                 {
                     try
                     {
-                        if (string.IsNullOrWhiteSpace(o.TextToUse) && string.IsNullOrWhiteSpace(o.WordToUse) && string.IsNullOrWhiteSpace(o.WordToUse) && string.IsNullOrWhiteSpace(o.PathToTextFile))
-                        {
-                            throw new Exception("No valid arguments for evaluation provided");
-                        }
+                        options = AppOptions(options);
 
-                        var textToEvaluate = TextToEvalate(o.TextToUse, o.PathToTextFile);
+                        var textToEvaluate = TextBuilder.TextToEvalate(options.TextToUse, options.PathToTextFile);
 
                         if (string.IsNullOrWhiteSpace(textToEvaluate))
                         {
@@ -33,10 +44,10 @@ namespace WordCount
                         Console.WriteLine("Starting process");
                         Console.ForegroundColor = ConsoleColor.White;
 
-                        if (!string.IsNullOrWhiteSpace(textToEvaluate) && !string.IsNullOrWhiteSpace(o.WordToUse))
+                        if (!string.IsNullOrWhiteSpace(textToEvaluate) && !string.IsNullOrWhiteSpace(options.WordToUse))
                         {
-                            var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, o.WordToUse);
-                            Console.WriteLine($"The word '{o.WordToUse}' occurred '{wordFrequency}' times");
+                            var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, options.WordToUse);
+                            Console.WriteLine($"The word '{options.WordToUse}' occurred '{wordFrequency}' times");
                         }
 
                         if (!string.IsNullOrWhiteSpace(textToEvaluate))
@@ -45,10 +56,10 @@ namespace WordCount
                             Console.WriteLine($"The highest frequency of a word in this paragraph is '{highestFrequency}' times");
                         }
 
-                        if (!string.IsNullOrWhiteSpace(textToEvaluate) && o.WordOnAverageCount > 0)
+                        if (!string.IsNullOrWhiteSpace(textToEvaluate) && options.WordOnAverageCount > 0)
                         {
-                            var wordsOnNthOccurence = wordFrequencyAnalyzer.CalculateMostFrequentNWords(textToEvaluate, o.WordOnAverageCount);
-                            Console.WriteLine($"Words that occured n={o.WordOnAverageCount} times:");
+                            var wordsOnNthOccurence = wordFrequencyAnalyzer.CalculateMostFrequentNWords(textToEvaluate, options.WordOnAverageCount);
+                            Console.WriteLine($"Words that occured n={options.WordOnAverageCount} times:");
 
                             foreach (var item in wordsOnNthOccurence)
                             {
@@ -71,33 +82,71 @@ namespace WordCount
         }
 
         /// <summary>
-        /// If we provide text and a file of large text, we append them and evaluate the entire string
-        /// Will also return one or the other if only one was provided
+        /// Help text to show if user didn't read the document provided
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="pathToTextFile"></param>
-        /// <returns></returns>
-        private static string TextToEvalate(string text, string pathToTextFile)
+        private static void HelpText()
         {
-            if (string.IsNullOrWhiteSpace(text) && string.IsNullOrWhiteSpace(pathToTextFile))
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("=> To optimally run/debug this app");
+
+#if DEBUG
+            Console.WriteLine("=> Right click on the project WordCount");
+            Console.WriteLine("=> Make it the startup project");
+            Console.WriteLine("=> Go to properties > debug");
+            Console.WriteLine("=> In the Command Line Arguments set the following");
+            Console.WriteLine("=> -w <word to evaluate> -t <text to evaluate> -n <n> -p <path to text file>");
+            Console.WriteLine("=> Press F5");
+#else
+            Console.WriteLine("=> Navigate to where `WordCount.exe` lives (after release build)");
+            Console.WriteLine("=> Run - WordCount.exe -w <word to evaluate> -t <text to evaluate> -n <n> -p <path to text file>");
+#endif            
+        }
+
+        /// <summary>
+        /// If no commandline options were given, allow user to enter text free hand
+        /// Add these free hand options to the actual options of the app.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private static Options AppOptions(Options options)
+        {
+            var isOptionsNull = Ensure.IsCommandArgumentsNotNull(options.TextToUse,
+                            options.WordToUse,
+                            options.WordOnAverageCount,
+                            options.PathToTextFile);
+
+            if (isOptionsNull)
             {
-                return string.Empty;
+                HelpText();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Please provide the text you want analysed:");
+                options.TextToUse = Console.ReadLine();
+                Console.WriteLine("Please enter the word you want the frequency of:");
+                options.WordToUse = Console.ReadLine();
+                Console.WriteLine("Please enter the 'n' number:");
+                try
+                {
+                    options.WordOnAverageCount = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    options.WordOnAverageCount = 0;
+                }
+
+                Console.WriteLine("Please enter path to text file (if any exist):");
+                options.PathToTextFile = Console.ReadLine();
+
+                isOptionsNull = Ensure.IsCommandArgumentsNotNullOrEmptyString(options.TextToUse,
+                options.WordToUse,
+                options.PathToTextFile);
+
+                if (isOptionsNull)
+                {
+                    throw new Exception("No valid arguments for evaluation provided");
+                }
             }
 
-            var textToEvaluate = new StringBuilder();
-            textToEvaluate.Append(text);
-
-            //If there is a text file and we do not append a space to the initial string, the words will
-            //be against each other and not counted. This is to allow so they are seen as independent
-            textToEvaluate.Append(" ");
-
-            if (!string.IsNullOrWhiteSpace(pathToTextFile))
-            {
-                var textInFile = File.ReadAllText(pathToTextFile);
-                textToEvaluate.Append(textInFile);
-            }
-            
-            return textToEvaluate.ToString();
+            return options;
         }
     }
 }
