@@ -85,9 +85,7 @@ namespace WordCount.Library.Services
             var wordList = ParagraphWordList(text);
 
             return wordList
-               .Where(word => word.ToLowerInvariant() != string.Empty 
-               //Exclude numeric and guid values and words containing numbers e,g h3ll0 and special characters not removed by the split
-               && !Regex.IsMatch(word, @"([0-9])|((?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$)|([`~!@#$%^&*()_\-+={}[\]])"))
+               .Where(word => word.ToLowerInvariant() != string.Empty && !Ensure.IsNotValidWord(word))
                .GroupBy(word => word.ToLowerInvariant())
                .ToDictionary(word => word.Key.ToLowerInvariant(), frequency => frequency.Count())
                .OrderByDescending(frequency => frequency.Value);

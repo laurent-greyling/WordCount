@@ -46,8 +46,17 @@ namespace WordCount
 
                         if (!string.IsNullOrWhiteSpace(textToEvaluate) && !string.IsNullOrWhiteSpace(options.WordToUse))
                         {
-                            var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, options.WordToUse);
-                            Console.WriteLine($"The word '{options.WordToUse}' occurred '{wordFrequency}' times");
+                            if (Ensure.IsNotValidWord(options.WordToUse))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"The requested word '{options.WordToUse}' is invalid, a word should be between A-Z or a-z");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            else 
+                            {
+                                var wordFrequency = wordFrequencyAnalyzer.CalculateFrequencyForWord(textToEvaluate, options.WordToUse);
+                                Console.WriteLine($"The word '{options.WordToUse}' occurred '{wordFrequency}' times");
+                            }                            
                         }
 
                         if (!string.IsNullOrWhiteSpace(textToEvaluate))
@@ -130,6 +139,7 @@ namespace WordCount
                 }
                 catch
                 {
+                    //if no valid int value given default to 0, nothing will be displayed                   
                     options.WordOnAverageCount = 0;
                 }
 

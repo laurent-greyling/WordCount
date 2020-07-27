@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace WordCount.Library.Utilities
 {
@@ -99,6 +100,16 @@ namespace WordCount.Library.Utilities
             }
 
             return count == values.Count();
+        }
+
+        /// <summary>
+        /// Exclude numeric and guid values and words containing numbers e,g h3ll0 and special characters not removed by the split
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static bool IsNotValidWord(string word)
+        {
+            return Regex.IsMatch(word, @"([0-9])|((?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$)|([`~!@#$%^&*()_\-+={}[\]])");
         }
     }
 }
