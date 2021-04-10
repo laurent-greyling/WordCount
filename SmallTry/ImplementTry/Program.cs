@@ -15,10 +15,10 @@ namespace ImplementTry
             Console.WriteLine();
             var dictionary = new KeyValueStore<string, int>();
 
-            var result = dictionary.Get("a");
             Console.WriteLine("Get a non existing key and check value");
+            var result = dictionary.Get("a");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"Value for key A is { result }");
+            Console.WriteLine($"Value for key A is { ConvertToString(result) }");
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.White;
@@ -28,7 +28,7 @@ namespace ImplementTry
 
             result = dictionary.Get("a");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"The value for key A is { result }");
+            Console.WriteLine($"The value for key A is { ConvertToString(result) }");
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.White;
@@ -100,7 +100,7 @@ namespace ImplementTry
 
             //var transActionResult = mainDictionary.Get("a");
             //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"The value for key A is { transActionResult }");
+            //Console.WriteLine($"The value for key A is { ConvertToString(transActionResult) }");
             //Console.WriteLine();
 
             //Console.ForegroundColor = ConsoleColor.White;
@@ -133,7 +133,7 @@ namespace ImplementTry
 
             //var transActionResult = mainDictionary.Get("a");
             //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"The value for key A is { transActionResult }");
+            //Console.WriteLine($"The value for key A is { ConvertToString(transActionResult) }");
             //Console.WriteLine();
 
             //Console.ForegroundColor = ConsoleColor.White;
@@ -159,7 +159,7 @@ namespace ImplementTry
             //    Console.ForegroundColor = ConsoleColor.White;
             //    Console.WriteLine("Set a keyvalue pair with Key==A and Value==20");
             //    Console.WriteLine();
-            //    scope.CurrentStore.Set("a", 20);                
+            //    scope.CurrentStore.Set("a", 20);
 
             //    using (var transaction = new TransactionService<string, int>(scope.MainStore))
             //    {
@@ -170,9 +170,9 @@ namespace ImplementTry
             //        Console.WriteLine();
             //        transaction.CurrentStore.Set("a", 50);
 
-            //        var value = transaction.CurrentStore.Get("a");                    
+            //        var value = transaction.CurrentStore.Get("a");
             //        Console.ForegroundColor = ConsoleColor.Green;
-            //        Console.WriteLine($"The value for key A is { value }");
+            //        Console.WriteLine($"The value for key A is { ConvertToString(value) }");
             //        Console.WriteLine();
 
             //        Console.ForegroundColor = ConsoleColor.White;
@@ -182,7 +182,7 @@ namespace ImplementTry
 
             //    Console.ForegroundColor = ConsoleColor.Green;
             //    var val = scope.CurrentStore.Get("a");
-            //    Console.WriteLine($"The value for key A is { val }");
+            //    Console.WriteLine($"The value for key A is { ConvertToString(val) }");
             //    Console.WriteLine();
 
             //    Console.ForegroundColor = ConsoleColor.White;
@@ -192,7 +192,7 @@ namespace ImplementTry
 
             //var transActionResult = mainDictionary.Get("a");
             //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"The value for key A is { transActionResult }");
+            //Console.WriteLine($"The value for key A is { ConvertToString(transActionResult) }");
             //Console.WriteLine();
 
             //Console.ForegroundColor = ConsoleColor.White;
@@ -204,5 +204,7 @@ namespace ImplementTry
 
             Console.ReadKey();
         }
+
+        private static string ConvertToString<T>(T Value) => Value == null ? "null" : Value.ToString();
     }
 }

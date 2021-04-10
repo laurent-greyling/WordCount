@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SomethingNew.Services
 {    
-    public class TransactionService<TKeyType, TValueType> : IDisposable
+    public class TransactionService<TKeyType, TValueType>: IDisposable where TValueType : struct  
     {
         /// <summary>
         /// Current KeyValueStore of the transaction

@@ -1,10 +1,11 @@
 ﻿using SomethingNew.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SomethingNew.Services
 {
-    public class KeyValueStore<TKeyType, TValueType>
+    public class KeyValueStore<TKeyType, TValueType> where TValueType: struct
     {
         /// <summary>
         /// List of Key value sets
@@ -46,10 +47,10 @@ namespace SomethingNew.Services
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public TValueType Get(TKeyType key)
+        public TValueType? Get(TKeyType key)
         {
             var keyValueSet = KeyValueSets.FirstOrDefault(set => set.Key.Equals(key));
-            return keyValueSet == null ? default : keyValueSet.Value;
+            return keyValueSet?.Value;
         }
 
         /// <summary>
