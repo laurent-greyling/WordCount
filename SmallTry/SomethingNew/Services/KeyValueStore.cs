@@ -5,14 +5,19 @@ using System.Linq;
 
 namespace SomethingNew.Services
 {
-    public class KeyValueStore<TKeyType, TValueType> where TValueType: struct
+    /// <summary>
+    /// et to a value type, do this else we cannot make it nullable and value type will return 0 instead of null
+    /// Do this mainly as for this task we want to see if value was null and print it
+    /// 0 can be a valid input, so if we print key was 0 a user can be confused to whether it is valid value or default (null) value
+    /// </summary>
+    /// <typeparam name="TKeyType"></typeparam>
+    /// <typeparam name="TValueType"></typeparam>
+    public class KeyValueStore<TKeyType, TValueType> where TValueType: struct 
     {
         /// <summary>
         /// List of Key value sets
-        /// https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.collection-1.count?redirectedfrom=MSDN&view=net-5.0#System_Collections_ObjectModel_Collection_1_Count
         /// </summary>
         public List<KeyValueSet<TKeyType, TValueType>> KeyValueSets { get; set; } = new List<KeyValueSet<TKeyType, TValueType>>();
-
 
         /// <summary>
         /// Add or update a value to the collection of key value sets

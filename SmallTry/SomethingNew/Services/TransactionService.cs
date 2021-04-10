@@ -1,6 +1,7 @@
 ﻿using SomethingNew.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace SomethingNew.Services
@@ -8,7 +9,7 @@ namespace SomethingNew.Services
     public class TransactionService<TKeyType, TValueType>: IDisposable where TValueType : struct  
     {
         /// <summary>
-        /// Current KeyValueStore of the transaction
+        /// Current/Temp KeyValueStore of the transaction
         /// </summary>
         public KeyValueStore<TKeyType, TValueType> CurrentStore { get; set; }
 
@@ -38,21 +39,41 @@ namespace SomethingNew.Services
         }
 
         /// <summary>
-        /// Commit a transaction
+        /// Committed a transaction
         /// Update main store with temp store values
         /// </summary>
-        public void Commit() 
+        public bool Committed() 
         {
-            var distinctValues = CurrentStore.KeyValueSets.Where(set => MainStore.KeyValueSets.All(collection => !collection.Key.Equals(set.Key)));
-            MainStore.KeyValueSets.AddRange(distinctValues);
+            try
+            {
+                var distinctValues = CurrentStore.KeyValueSets.Where(set => MainStore.KeyValueSets.All(collection => !collection.Key.Equals(set.Key)));
+                MainStore.KeyValueSets.AddRange(distinctValues);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         /// <summary>
         /// Rollback uncommited sets in transaction to original
         /// </summary>
-        public void RollBack() 
+        public bool RollBack() 
         {
-            Dispose();
+            try
+            {
+                Dispose();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         public void Dispose()

@@ -93,9 +93,9 @@ namespace ImplementTry
             //    Console.WriteLine("Set a keyvalue pair with Key==A and Value==10");
             //    scope.CurrentStore.Set("a", 10);
 
-            //    Console.WriteLine("Commit Transaction");
+            //    Console.WriteLine("Try Commit Transaction");
             //    Console.WriteLine();
-            //    scope.Commit();
+            //    IsTransactionSuccesful(scope.Committed());
             //}
 
             //var transActionResult = mainDictionary.Get("a");
@@ -126,9 +126,9 @@ namespace ImplementTry
             //    Console.WriteLine("Set a keyvalue pair with Key==A and Value==20");
             //    scope.CurrentStore.Set("a", 20);
 
-            //    Console.WriteLine("Rollback Transaction");
+            //    Console.WriteLine("Try Rollback Transaction");
             //    Console.WriteLine();
-            //    scope.RollBack(); //Can also just not do anything as using will invoke dispose at end and will auto rollback with no commit
+            //    IsTransactionSuccesful(scope.RollBack()); //Can also just not do anything as using will invoke dispose at end and will auto rollback with no commit
             //}
 
             //var transActionResult = mainDictionary.Get("a");
@@ -176,8 +176,8 @@ namespace ImplementTry
             //        Console.WriteLine();
 
             //        Console.ForegroundColor = ConsoleColor.White;
-            //        Console.WriteLine($"Rollback Transaction 2");
-            //        transaction.RollBack(); //will auto dispose with no commit at end of using
+            //        Console.WriteLine($"Try Rollback Transaction 2");
+            //        IsTransactionSuccesful(transaction.RollBack()); //will auto dispose with no commit at end of using
             //    }
 
             //    Console.ForegroundColor = ConsoleColor.Green;
@@ -186,8 +186,8 @@ namespace ImplementTry
             //    Console.WriteLine();
 
             //    Console.ForegroundColor = ConsoleColor.White;
-            //    Console.WriteLine($"Commit");
-            //    scope.Commit();
+            //    Console.WriteLine($"Try Commit Transaction");
+            //    IsTransactionSuccesful(scope.Committed());
             //}
 
             //var transActionResult = mainDictionary.Get("a");
@@ -202,9 +202,61 @@ namespace ImplementTry
             //Console.WriteLine();
             #endregion
 
+            #region November
+            //Console.WriteLine("===================================================");
+            //Console.WriteLine("Key Value Store Transaction");
+            //Console.WriteLine("===================================================");
+            //Console.WriteLine();
+
+            //var mainDictionary = new KeyValueStore<string, int>();
+
+            //using (var scope = new TransactionService<string, int>(mainDictionary))
+            //{
+            //    Console.ForegroundColor = ConsoleColor.White;
+            //    Console.WriteLine("Set a keyvalue pair with Key==A and Value==20");
+            //    Console.WriteLine();
+            //    scope.CurrentStore?.Set("a", 20);
+
+            //    Console.ForegroundColor = ConsoleColor.White;
+            //    Console.WriteLine($"Try Commit Transaction");
+
+            //    IsTransactionSuccesful(scope.Committed());
+            //}
+
+            #endregion
+
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Console.Writeline will not write null to console window, this is to check if value is null
+        /// If value is null set string null so console.writeline can print it on screen else send back actual value as string value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Value"></param>
+        /// <returns></returns>
         private static string ConvertToString<T>(T Value) => Value == null ? "null" : Value.ToString();
+
+        /// <summary>
+        /// Will check if transaction was in error or not. If in error assume that no transaction was started
+        /// A started transaction will initialise a new temp store, so without a begin, we will get a null reference, which can safely be seen as
+        /// no transaction started
+        /// </summary>
+        /// <param name="action"></param>
+        private static void IsTransactionSuccesful(bool action) 
+        {
+            if (action)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Transaction Succesfull");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"ERROR, no transaction");
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }
