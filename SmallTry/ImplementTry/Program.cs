@@ -10,72 +10,72 @@ namespace ImplementTry
         static void Main(string[] args)
         {
             #region Alpha
-            //Console.WriteLine("===================================================");
-            //Console.WriteLine("Key Value Store Basic");
-            //Console.WriteLine("===================================================");
-            //Console.WriteLine();
-            //var dictionary = new KeyValueStore<string, int>();
+            Console.WriteLine("===================================================");
+            Console.WriteLine("Key Value Store Basic");
+            Console.WriteLine("===================================================");
+            Console.WriteLine();
+            var dictionary = new KeyValueStore<string, int>();
 
-            //Console.WriteLine("Get a non existing key and check value");
-            //var result = dictionary.Get("a");
-            //Console.ForegroundColor = ConsoleColor.Yellow;
-            //Console.WriteLine($"Value for key A is { ConvertToString(result) }");
-            //Console.WriteLine();
+            Console.WriteLine("Get a non existing key and check value");
+            var result = dictionary.Get("a");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Value for key A is { ConvertToString(result) }");
+            Console.WriteLine();
 
-            //Console.ForegroundColor = ConsoleColor.White;
-            //Console.WriteLine("Set a keyvalue pair with Key==A and Value==10");
-            //Console.WriteLine();
-            //dictionary.Set("a", 10);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Set a keyvalue pair with Key==A and Value==10");
+            Console.WriteLine();
+            dictionary.Set("a", 10);
 
-            //result = dictionary.Get("a");
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"The value for key A is { ConvertToString(result) }");
-            //Console.WriteLine();
+            result = dictionary.Get("a");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"The value for key A is { ConvertToString(result) }");
+            Console.WriteLine();
 
-            //Console.ForegroundColor = ConsoleColor.White;
-            //Console.WriteLine("Set a keyvalue pair with Key==B and Value==10");
-            //Console.WriteLine();
-            //dictionary.Set("b", 10);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Set a keyvalue pair with Key==B and Value==10");
+            Console.WriteLine();
+            dictionary.Set("b", 10);
 
-            //var cnt = dictionary.Count(10);
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"Number of times the value 10 occured was { cnt }");
-            //Console.WriteLine();
+            var cnt = dictionary.Count(10);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Number of times the value 10 occured was { cnt }");
+            Console.WriteLine();
 
-            //Console.ForegroundColor = ConsoleColor.Red;
-            //Console.WriteLine($"Delete Key C");
-            //dictionary.Delete("c");
-            //Console.WriteLine($"Delete Key B");
-            //dictionary.Delete("b");
-            //Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Delete Key C");
+            dictionary.Delete("c");
+            Console.WriteLine($"Delete Key B");
+            dictionary.Delete("b");
+            Console.WriteLine();
 
-            //cnt = dictionary.Count(10);
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine($"Number of times the value 10 occured was { cnt }");
-            //Console.WriteLine();
+            cnt = dictionary.Count(10);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Number of times the value 10 occured was { cnt }");
+            Console.WriteLine();
 
-            //Console.ForegroundColor = ConsoleColor.Yellow;
-            //Console.WriteLine("Update key A value to 20");
-            //Console.WriteLine();
-            //dictionary.Set("a", 20);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Update key A value to 20");
+            Console.WriteLine();
+            dictionary.Set("a", 20);
 
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //cnt = dictionary.Count(10);
-            //Console.WriteLine($"Number of times 10 occured was { cnt }");
-            //cnt = dictionary.Count(20);
-            //Console.WriteLine($"Number of times 20 occured was { cnt }");
-            //Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            cnt = dictionary.Count(10);
+            Console.WriteLine($"Number of times 10 occured was { cnt }");
+            cnt = dictionary.Count(20);
+            Console.WriteLine($"Number of times 20 occured was { cnt }");
+            Console.WriteLine();
 
-            //Console.ForegroundColor = ConsoleColor.Black;
-            //Console.BackgroundColor = ConsoleColor.White;
-            //Console.WriteLine(dictionary.End());
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.WriteLine(dictionary.End());
 
-            //Console.ForegroundColor = ConsoleColor.White;
-            //Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
 
-            //Console.WriteLine("===================================================");
-            //Console.WriteLine("===================================================");
-            //Console.WriteLine();
+            Console.WriteLine("===================================================");
+            Console.WriteLine("===================================================");
+            Console.WriteLine();
             #endregion
 
             #region Beta
@@ -242,6 +242,7 @@ namespace ImplementTry
         /// Will check if transaction was in error or not. If in error assume that no transaction was started
         /// A started transaction will initialise a new temp store, so without a begin, we will get a null reference, which can safely be seen as
         /// no transaction started
+        /// https://thevaluable.dev/dry-principle-cost-benefit-example/
         /// </summary>
         /// <param name="action"></param>
         private static void IsTransactionSuccesful(bool action) 

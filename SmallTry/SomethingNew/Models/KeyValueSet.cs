@@ -1,6 +1,7 @@
 ﻿namespace SomethingNew.Models
 {
     /// <summary>
+    /// Why Generic types => https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/generic-classes
     /// Object model that will hold the values we set as key value pairs
     /// Make this a generic type so we can specify any type we want.
     /// If it was concrete types we will always set it to the data type we want and can never reuse the code for other types. This will increase 
