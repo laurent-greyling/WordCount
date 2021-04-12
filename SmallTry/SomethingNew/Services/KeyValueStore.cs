@@ -6,16 +6,19 @@ using System.Linq;
 namespace SomethingNew.Services
 {
     /// <summary>
-    /// et to a value type, do this else we cannot make it nullable and value type will return 0 instead of null
+    /// Key value store is the business logic for set, get, count keyvalue sets. This is what we will initialise to create a dictionary of KeyValueSets
+    /// Set to a value type for TValueType, do this else we cannot make the TValueType nullable and value type will return 0 instead of null as default
     /// Do this mainly as for this task we want to see if value was null and print it
     /// 0 can be a valid input, so if we print key was 0 a user can be confused to whether it is valid value or default (null) value
+    /// Generic constraints - https://www.tutorialsteacher.com/csharp/constraints-in-generic-csharp
     /// </summary>
     /// <typeparam name="TKeyType"></typeparam>
     /// <typeparam name="TValueType"></typeparam>
-    public class KeyValueStore<TKeyType, TValueType> where TValueType: struct 
+    public class KeyValueStore<TKeyType, TValueType> where TValueType: struct //Struct will make TValueType a value type (int, datetime, char...)
     {
         /// <summary>
-        /// List of Key value sets
+        /// Initialize a List of Key value sets
+        /// When called it will not through null reference exception
         /// </summary>
         public List<KeyValueSet<TKeyType, TValueType>> KeyValueSets { get; set; } = new List<KeyValueSet<TKeyType, TValueType>>();
 
@@ -49,6 +52,7 @@ namespace SomethingNew.Services
 
         /// <summary>
         /// Return the value of a specified key identifier
+        /// If it is not found return null, to do this we set our return type to nullable
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -60,6 +64,7 @@ namespace SomethingNew.Services
 
         /// <summary>
         /// Return count of same values
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.count?view=net-5.0#remarks  (search c# list count o(1))
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -67,6 +72,7 @@ namespace SomethingNew.Services
 
         /// <summary>
         /// Clear key values from memory and say bye
+        /// Clear from memory to not accidentaly keep around and fill up unecessaraly
         /// </summary>
         /// <returns></returns>
         public string End() 
@@ -84,6 +90,7 @@ namespace SomethingNew.Services
 
         /// <summary>
         /// Update the value of a specified key identifier
+        /// We update after we check for key present as we do not want to add duplicates
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>

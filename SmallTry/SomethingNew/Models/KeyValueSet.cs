@@ -1,5 +1,13 @@
 ﻿namespace SomethingNew.Models
 {
+    /// <summary>
+    /// Object model that will hold the values we set as key value pairs
+    /// Make this a generic type so we can specify any type we want.
+    /// If it was concrete types we will always set it to the data type we want and can never reuse the code for other types. This will increase 
+    /// duplicity of code as we will need keyvalue set for each type we want in future
+    /// </summary>
+    /// <typeparam name="TKeyType"></typeparam>
+    /// <typeparam name="TValueType"></typeparam>
     public class KeyValueSet<TKeyType, TValueType>
     {
         /// <summary>
