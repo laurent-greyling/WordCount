@@ -18,5 +18,12 @@ namespace Scraper.Repositories
         /// <param name="shows"></param>
         /// <returns></returns>
         IEnumerable<Shows> Retrieve();
+
+        /// <summary>
+        /// Check if list in DB and Api correlate, only take from API where ID does not exist and add these as new shows to DB
+        /// </summary>
+        /// <param name="shows"></param>
+        /// <returns></returns>
+        List<Shows> GetNewShows(List<Shows> shows);
     }
 }

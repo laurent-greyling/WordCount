@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Scraper.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Scraper.Services
 {
@@ -7,6 +9,18 @@ namespace Scraper.Services
         /// <summary>
         /// Retreive shows from API
         /// </summary>
-        Task AddRangeAsync();
+        Task AddRangeAsync(List<Shows> shows);
+
+        /// <summary>
+        /// Add show id to a queue message
+        /// </summary>
+        /// <returns></returns>
+        Task AddQueueMessageAsync(List<Shows> shows);
+
+        /// <summary>
+        /// Get the shows not present in the database
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Shows>> GetShowsAsync();
     }
 }

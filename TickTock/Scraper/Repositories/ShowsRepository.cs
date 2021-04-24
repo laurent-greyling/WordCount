@@ -20,18 +20,13 @@ namespace Scraper.Repositories
         {
             Ensure.ArgumentNotNull(shows, nameof(shows));
 
-            await _context.Shows.AddRangeAsync(NewShows(shows));
+            await _context.Shows.AddRangeAsync(shows);
             await _context.SaveChangesAsync();
         }
 
         public IEnumerable<Shows> Retrieve() => _context.Shows.AsNoTracking();
-
-        /// <summary>
-        /// Check if list in DB and Api correlate, only take from API where ID does not exist and add these as new shows to DB
-        /// </summary>
-        /// <param name="shows"></param>
-        /// <returns></returns>
-        private List<Shows> NewShows(List<Shows> shows)
+                
+        public List<Shows> GetNewShows(List<Shows> shows)
         {
             var existingShows = Retrieve();
 

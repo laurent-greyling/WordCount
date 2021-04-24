@@ -25,7 +25,9 @@ namespace Scraper
         {
             try
             {
-                await _showsService.AddRangeAsync();
+                var shows = await _showsService.GetShowsAsync();
+                await _showsService.AddRangeAsync(shows);
+                await _showsService.AddQueueMessageAsync(shows);
             }
             catch (Exception ex)
             {
