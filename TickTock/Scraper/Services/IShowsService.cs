@@ -7,7 +7,7 @@ namespace Scraper.Services
     public interface IShowsService
     {
         /// <summary>
-        /// Retreive shows from API
+        /// Retreive shows from API and Add to DB
         /// </summary>
         Task AddRangeAsync(List<Shows> shows);
 

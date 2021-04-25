@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Configuration;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -35,11 +34,13 @@ namespace Scraper.Entities
         {
             modelBuilder.Entity<Cast>(entity =>
             {
+                entity.HasKey(e => e.CastShowId);
+
                 entity.ToTable("Cast", "Tv");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.CastShowId).HasMaxLength(50);
 
-                entity.Property(e => e.Birthday).HasColumnType("date");
+                entity.Property(e => e.Birthday).HasMaxLength(10);
 
                 entity.Property(e => e.Name)
                     .IsRequired()

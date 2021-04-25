@@ -4,11 +4,7 @@ using Scraper.Repositories;
 using Scraper.Utilities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
 using System;
-using System.Linq;
-using Microsoft.Azure.ServiceBus;
-using System.Text;
 
 namespace Scraper.Services
 {
@@ -16,31 +12,23 @@ namespace Scraper.Services
     {
         private readonly IShowsRepository _showsRepository;
         private readonly IRestClient _client;
-        private readonly string _serviceBusConnection = Environment.GetEnvironmentVariable("SbConnectionString");
-        private readonly string _serviceQueueName = Environment.GetEnvironmentVariable("QueueName");
+        private readonly IMessageClient _messageClient;
 
         public ShowsService(IShowsRepository showsRepository,
-            IRestClient client)
+            IRestClient client,
+            IMessageClient messageClient)
         {
             _showsRepository = showsRepository;
             _client = client;
+            _messageClient = messageClient;
         }
 
         public async Task AddQueueMessageAsync(List<Shows> shows)
         {
-            var queueClient = new QueueClient(_serviceBusConnection, _serviceQueueName);
-
             foreach (var show in shows)
             {
-                var apiUri = $"{Environment.GetEnvironmentVariable("ApiUri")}shows/{show.Id}/cast";
-                var body = Encoding.UTF8.GetBytes(apiUri);
-                var message = new Message
-                {
-                    Body = body,
-                    ContentType = "text/plain"
-                };
-
-                await queueClient.SendAsync(message);
+                var apiUri = $"shows/{show.Id}/cast";
+                await _messageClient.SendAsync(apiUri, show.Id);
             }
         }
 

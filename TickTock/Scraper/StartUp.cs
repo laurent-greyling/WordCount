@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 using Scraper;
 using Scraper.Entities;
 using Scraper.Repositories;
@@ -8,6 +9,7 @@ using Scraper.Services;
 using Scraper.Utilities;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 
 [assembly: FunctionsStartup(typeof(StartUp))]
 namespace Scraper
@@ -19,18 +21,21 @@ namespace Scraper
         {
             IConfiguration configuration = builder.GetContext().Configuration;
 
-            builder.Services.AddSingleton<IShowsRepository, ShowsRepository>();
+            //allow 10 parallel http calls, and up to 20 http calls to 'queue' for an execution slot (thumbsuck values)
+            var throttler = Policy.BulkheadAsync<HttpResponseMessage>(10, 20);
 
-            //Can add retry policies and polly to this, https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
-            //But for this purpose I am leaving the function retry policy as it is automatically a 5 times retry policy
-            builder.Services.AddHttpClient<IRestClient, RestClient>(client => 
+            builder.Services.AddHttpClient<IRestClient, RestClient>(client =>
             {
                 var apiUri = configuration.GetSection("ApiUri");
                 client.BaseAddress = new Uri(apiUri.Value);
-            });
+            }).AddPolicyHandler(throttler);
 
-            builder.Services.AddSingleton<IShowsService, ShowsService>();
-            builder.Services.AddSingleton(serviceProvider => 
+            builder.Services.AddScoped<IMessageClient, MessageBrokerClient>()
+            .AddScoped<IShowsService, ShowsService>()
+            .AddScoped<ICastService, CastService>()
+            .AddScoped<IShowsRepository, ShowsRepository>()
+            .AddScoped<ICastRepository, CastRepository>()
+            .AddScoped(serviceProvider => 
                 new PlayScraperContext());
 
             builder.Services.AddLogging();

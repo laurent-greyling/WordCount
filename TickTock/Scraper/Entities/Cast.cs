@@ -9,10 +9,11 @@ namespace Scraper.Entities
 {
     public partial class Cast
     {
+        public string CastShowId { get; set; }
         public int Id { get; set; }
         public int ShowId { get; set; }
         public string Name { get; set; }
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; }
 
         public virtual Shows Show { get; set; }
     }
